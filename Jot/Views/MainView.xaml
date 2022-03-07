@@ -1,0 +1,320 @@
+﻿<Window
+    x:Class="Jot.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Jot.ViewModels"
+    Title="Jot: Word Processor and Library"
+    Width="640"
+    Height="480"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    Icon="../Resources/icon.ico"
+    mc:Ignorable="d">
+    <Window.InputBindings>
+
+        <KeyBinding
+            Key="S"
+            Command="{Binding OperationSave}"
+            Modifiers="Control" />
+    </Window.InputBindings>
+    <DockPanel>
+        <StackPanel
+            Background="#27272A"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal">
+            <Grid Margin="4" Background="#27272A">
+                <StackPanel Orientation="Horizontal">
+                    <Menu VerticalAlignment="Center" Background="Transparent">
+                        <MenuItem
+                            Foreground="#ECF0F1"
+                            Header="_File"
+                            Style="{StaticResource MenuItem}">
+                            <MenuItem
+                                Command="{Binding OperationNew}"
+                                Header="_New"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="{Binding OperationClose}"
+                                Header="_Close"
+                                IsEnabled="{Binding FileIsBusyMirror}"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="{Binding OperationSave}"
+                                Header="_Save"
+                                InputGestureText="Ctrl+S"
+                                IsEnabled="{Binding FileIsBusyMirror}"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="{Binding OperationDelete}"
+                                Header="_Delete"
+                                IsEnabled="{Binding FileIsBusyMirror}"
+                                Style="{StaticResource MenuItem}" />
+                            <Separator />
+                            <MenuItem
+                                Command="{Binding OperationExit}"
+                                Header="_Exit"
+                                IsEnabled="{Binding FileIsBusyMirror}"
+                                Style="{StaticResource MenuItem}" />
+                        </MenuItem>
+                        <MenuItem
+                            Foreground="#ECF0F1"
+                            Header="_Edit"
+                            Style="{StaticResource MenuItem}">
+                            <MenuItem
+                                Command="Undo"
+                                Header="_Undo"
+                                Style="{StaticResource MenuItem}" />
+                            <Separator />
+                            <MenuItem
+                                Command="Cut"
+                                Header="_Cut"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="Copy"
+                                Header="_Copy"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="Paste"
+                                Header="_Paste"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="Delete"
+                                Header="_Delete"
+                                Style="{StaticResource MenuItem}" />
+                        </MenuItem>
+                        <MenuItem
+                            Foreground="#ECF0F1"
+                            Header="_View"
+                            Style="{StaticResource MenuItem}">
+                            <MenuItem
+                                Command="{Binding OperationFormatting}"
+                                Header="{Binding OperationFormattingHeader}"
+                                Style="{StaticResource MenuItem}" />
+                            <Separator />
+                            <MenuItem
+                                Command="{Binding OperationLibrary}"
+                                Header="{Binding OperationLibraryHeader}"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="{Binding OperationLibraryDetails}"
+                                Header="{Binding OperationLibraryDetailsHeader}"
+                                Style="{StaticResource MenuItem}" />
+                        </MenuItem>
+                        <MenuItem
+                            Foreground="#ECF0F1"
+                            Header="_Help"
+                            Style="{StaticResource MenuItem}">
+                            <MenuItem
+                                Command="{Binding OperationDocumentation}"
+                                Header="_Documentation"
+                                Style="{StaticResource MenuItem}" />
+                            <MenuItem
+                                Command="{Binding OperationAbout}"
+                                Header="_About"
+                                Style="{StaticResource MenuItem}" />
+                        </MenuItem>
+                    </Menu>
+                    <TextBlock
+                        Margin="0,0,6,0"
+                        Foreground="#333333"
+                        Text="|" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="#999999"
+                        Text="GitHub" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid
+            Height="{Binding DrawToolBar}"
+            Background="#27272A"
+            DockPanel.Dock="Top"
+            UseLayoutRounding="True">
+            <StackPanel Margin="10,2,0,5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,3,10,0"
+                        FontSize="12"
+                        Style="{StaticResource TextBlock}"
+                        Text="Font" />
+                    <ComboBox
+                        Width="100"
+                        Height="21"
+                        Margin="0,0,0,10"
+                        SelectedIndex="{Binding SelectedFontIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <ComboBoxItem Content="Fira Mono" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="Fira Sans" Style="{StaticResource ComboBoxItem}" />
+                    </ComboBox>
+                    <TextBlock
+                        Margin="15,3,10,0"
+                        FontSize="12"
+                        Style="{StaticResource TextBlock}"
+                        Text="Size" />
+                    <ComboBox
+                        Width="70"
+                        Height="21"
+                        Margin="0,0,0,10"
+                        SelectedIndex="{Binding SelectedFontSizeIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <ComboBoxItem Content="8pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="9pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="10pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="11pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="12pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="14pt" Style="{StaticResource ComboBoxItem}" />
+                        <ComboBoxItem Content="16pt" Style="{StaticResource ComboBoxItem}" />
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid Background="#1E1E1E">
+            <Grid Visibility="{Binding DrawCanvas}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="19*" />
+                    <ColumnDefinition Width="622*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="pack://application:,,,/Fonts/#Fira Sans Black"
+                        FontSize="240px"
+                        Foreground="#27272A"
+                        Text="Jot"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Margin="0,-17,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{DynamicResource FiraSansRegular}"
+                        FontSize="80.1px"
+                        Foreground="#27272A"
+                        Text="Freeware"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{DynamicResource FiraSansRegular}"
+                        FontSize="25.5px"
+                        Foreground="#27272A"
+                        Text="Word Processor and Library"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+            </Grid>
+            <Grid FocusManager.FocusedElement="{Binding ElementName=TextBox}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding DrawLibrary}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Column="0"
+                    Margin="0,0,0,0"
+                    Background="#333333">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="42" />
+                        <RowDefinition Height="{Binding DrawSearchResult}" />
+
+                        <RowDefinition />
+                        <RowDefinition Height="{Binding DrawLibraryDetails}" />
+                        <RowDefinition Height="32" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <TextBlock
+                            Margin="10,3,0,0"
+                            FontSize="12"
+                            Style="{StaticResource TextBlock}"
+                            Text="Library" />
+                        <TextBlock
+                            Margin="10,3,0,0"
+                            FontSize="12"
+                            Style="{StaticResource TextBlock}"
+                            Text="Sorted by last modified" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Background="#27AE60">
+                        <TextBlock
+                            Margin="7,2,0,0"
+                            FontSize="12"
+                            Foreground="#ECF0F1"
+                            Style="{StaticResource TextBlock}"
+                            Text="{Binding SearchResult}" />
+                        <Button
+                            Width="68"
+                            Height="20"
+                            Margin="7,4,0,0"
+                            HorizontalAlignment="Left"
+                            Command="{Binding OperationResetView}"
+                            Content="Reset View"
+                            IsEnabled="{Binding FileIsBusyMirror}" />
+                    </StackPanel>
+                    <ListView
+                        Grid.Row="2"
+                        Padding="4"
+                        DisplayMemberPath="Title"
+                        IsEnabled="{Binding FileIsBusyMirror}"
+                        ItemContainerStyle="{StaticResource ListViewItem}"
+                        ItemsSource="{Binding Library, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="{Binding ListViewSelectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectedItem="{Binding UserNote, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        SelectionMode="Single" />
+                    <StackPanel Grid.Row="3" Background="#414141">
+                        <TextBlock
+                            Margin="10,3,0,0"
+                            FontSize="12"
+                            Style="{StaticResource TextBlock}"
+                            Text="{Binding LastModified}" />
+                        <TextBlock
+                            Margin="10,7,0,0"
+                            FontSize="12"
+                            Style="{StaticResource TextBlock}"
+                            Text="{Binding DateCreated}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="7,1,0,0"
+                                FontSize="12"
+                                Foreground="#BDC3C7"
+                                Style="{StaticResource TextBlock}"
+                                Text="🔍" />
+                            <TextBox
+                                Width="121"
+                                Height="20"
+                                Margin="7,0,0,0"
+                                Padding="2,2,0,0"
+                                Background="#414141"
+                                BorderThickness="0"
+                                FontSize="12"
+                                Foreground="#ECF0F1"
+                                Text="{Binding TextBoxSearch}" />
+                            <Button
+                                Width="20"
+                                Height="20"
+                                Command="{Binding OperationSearch}">
+                                <TextBlock
+                                    Margin="-2,-11,0,0"
+                                    FontSize="24"
+                                    Foreground="#BDC3C7"
+                                    RenderOptions.EdgeMode="Aliased"
+                                    Text="↺" />
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <TextBox
+                    Name="TextBox"
+                    Grid.Column="1"
+                    Margin="0,0,0,0"
+                    Background="#1E1E1E"
+                    FontFamily="{Binding SelectedFont}"
+                    FontSize="{Binding SelectedFontSize}"
+                    Style="{StaticResource TextBox}"
+                    Text="{Binding UserNote.Reads, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Visibility="{Binding DrawTextBox}" />
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
