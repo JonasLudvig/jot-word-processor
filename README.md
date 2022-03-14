@@ -11,7 +11,7 @@ Current Build
 -----------------
 Self-contained x86 application bound to run on pretty much whatever toaster with .exe support.
 
-Download: https://qsdlr.org/builds/jot.exe (131 MB)
+Download: https://qsdlr.org/builds/Jot.exe (131 MB)
 
 
 Copyright (c) 2022 Jonas Lind. All rights reserved.
