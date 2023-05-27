@@ -12,5 +12,3 @@ Self-sustained multithreaded MVVM WPF application.
 Self-contained x86 application bound to run on pretty much whatever toaster with .exe support.<br><br>
 
 Download: https://qsdlr.org/builds/jot-word-processor.exe (131 MB)<br><br>
-
-Copyright (c) 2022 Jonas Lind. All rights reserved.
